@@ -187,7 +187,8 @@ where both are strings.  NEW-FILE-NAME is relative to
   :type '(repeat (string :tag "Jira state name:")))
 
 (defcustom org-jira-users
-  '(("Full Name" . "account-id"))
+  ;; '(("Full Name" . "account-id"))
+  '(("Unassigned" . nil))
   "A list of displayName and key pairs."
   :group 'org-jira
   :type 'list)
@@ -744,7 +745,7 @@ it isn't already on."
 (defun org-jira-get-assignable-users (project-key)
   "Get the list of assignable users for PROJECT-KEY, adding user set jira-users first."
   (append
-   '(("Unassigned" . nil))
+   ;; '(("Unassigned" . nil))
    org-jira-users
    (mapcar (lambda (user)
              (cons (org-jira-decode (cdr (assoc 'displayName user)))
@@ -2039,7 +2040,7 @@ that should be bound to an issue."
              (description . ,description)
              (priority (id . ,priority))
              ;; accountId should be nil if Unassigned, not the key slot.
-             (assignee (accountId . ,(or (cdr (assoc user jira-users)) nil)))))))
+             (assignee (name . ,(or (cdr (assoc user jira-users)) nil)))))))
     ticket-struct))
 
 ;;;###autoload
