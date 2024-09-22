@@ -947,6 +947,12 @@ Return nil if the field is not found"
         when (rassoc full-name user)
         return (cdr (assoc 'accountId user))))
 
+(defun jiralib-get-user-name (project full-name)
+    "Return the name of the user with FULL-NAME (displayName) in PROJECT."
+  (cl-loop for user in (jiralib-get-users project)
+        when (rassoc full-name user)
+        return (cdr (assoc 'name user))))
+
 (defun jiralib-get-filter (filter-id)
   "Return a filter given its FILTER-ID."
   (cl-flet ((id-match (filter)

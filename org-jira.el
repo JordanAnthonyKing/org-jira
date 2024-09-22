@@ -1853,7 +1853,7 @@ purpose of wiping an old subtree."
                           (cdr (rassoc user jira-users)))))
           (when (null reporter)
             (error "No reporter found, this should probably never happen."))
-          (org-jira-update-issue-details issue-id filename :reporter (jiralib-get-user-account-id project reporter)))
+          (org-jira-update-issue-details issue-id filename :reporter (jiralib-get-user-name project reporter)))
       (error "Not on an issue"))))
 
 ;;;###autoload
@@ -1874,7 +1874,7 @@ purpose of wiping an old subtree."
                           (cdr (rassoc user jira-users)))))
           (when (null assignee)
             (error "No assignee found, use org-jira-unassign-issue to make the issue unassigned"))
-          (org-jira-update-issue-details issue-id filename :assignee (jiralib-get-user-account-id project assignee)))
+          (org-jira-update-issue-details issue-id filename :assignee (jiralib-get-user-name project assignee)))
       (error "Not on an issue"))))
 
 ;;;###autoload
@@ -2458,9 +2458,9 @@ otherwise it should return:
                    (cons (org-jira--org->api-field-id 'description)
                          org-issue-description)
                    (cons (org-jira--org->api-field-id 'assignee)
-                         (list (cons 'id (jiralib-get-user-account-id project org-issue-assignee))))
+                         (list (cons 'id (jiralib-get-user-name project org-issue-assignee))))
                    (cons (org-jira--org->api-field-id 'reporter)
-                         (list (cons 'id (jiralib-get-user-account-id project org-issue-reporter))))
+                         (list (cons 'id (jiralib-get-user-name project org-issue-reporter))))
                    (cons (org-jira--org->api-field-id 'summary)
                          (org-jira-strip-priority-tags (org-jira-get-issue-val-from-org 'summary)))
                    (cons (org-jira--org->api-field-id 'issuetype)
